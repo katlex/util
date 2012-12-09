@@ -22,10 +22,14 @@ import xsbti.{AppConfiguration, AppMain}
 
 trait EntryPoint {
   def run(args:Array[String]): Int
-  def main(args:Array[String]) { System.exit(run(args)) }
+  final def main(args:Array[String]) { System.exit(run(args)) }
 }
 
-case class LauncherAdapter(ep:EntryPoint) extends AppMain {
+class LauncherAdapterDelegate(ep:EntryPoint) extends EntryPoint with LauncherAdapter {
+  def run(args: Array[String]) = ep.run(args)
+}
+
+trait LauncherAdapter extends AppMain { this: EntryPoint =>
   case class Exit(val code: Int) extends xsbti.Exit
-  def run(config: AppConfiguration) = Exit(ep.run(config.arguments))
+  def run(config: AppConfiguration) = Exit(run(config.arguments))
 }
