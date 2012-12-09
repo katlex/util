@@ -6,4 +6,4 @@ version := "0.1-SNAPSHOT"
 
 libraryDependencies ++= Seq("org.scala-sbt" % "launcher-interface" % "0.12.0" % "provided")
 
-scalaVersion := "2.10.0-RC2"
+scalaVersion := "2.10.0-RC3"
